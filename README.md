@@ -1,10 +1,10 @@
 # EPWS2122RepkeJohne
 Development Title: Tidy Shiny Fireworks
-#Exposé
-#Darstellung des Problemraums
+# Exposé
+# Darstellung des Problemraums
 
-#Zielsetzung/Vision
+# Zielsetzung/Vision
 
-#Relevanz
+# Relevanz
 
-#Literaturverzeichnis
+# Literaturverzeichnis
