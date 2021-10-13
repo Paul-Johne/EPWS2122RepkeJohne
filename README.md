@@ -13,4 +13,6 @@ Development Title: Tidy Shiny Fireworks
 
 ### Relevanz
 
+### Deliverables und Artefakte für das Audit 1
+
 ### Literaturverzeichnis
