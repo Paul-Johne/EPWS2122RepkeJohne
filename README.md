@@ -68,6 +68,6 @@ Die Deutschen geben jährlich 100 bis 137 Millionen Euro zu Silvester an Feuerwe
 
 [UBAFeinstaub2] Umweltbundesamt: "Feinstaub", URL: [https://www.umweltbundesamt.de/themen/luft/luftschadstoffe-im-ueberblick/feinstaub#undefined], Stand: 14.10.2021.
 
-Unserding: "FEUERWERK: PRO & CONTRA", URL: [https://www.unserding.de/unserding/news/themen/20201124_pro_contra_feuerwerk_100.html], Stand: 14.10.2021.
+[UnsFeuerwerk] Unserding: "FEUERWERK: PRO & CONTRA", URL: [https://www.unserding.de/unserding/news/themen/20201124_pro_contra_feuerwerk_100.html], Stand: 14.10.2021.
 
-Welthungerhilfe: "KLIMAWANDEL - URSACHEN UND FOLGEN", URL: [https://www.welthungerhilfe.de/informieren/themen/klimawandel/#folgen], Stand: 14.10.2021.
+[WHHKlima] Welthungerhilfe: "KLIMAWANDEL - URSACHEN UND FOLGEN", URL: [https://www.welthungerhilfe.de/informieren/themen/klimawandel/#folgen], Stand: 14.10.2021.
