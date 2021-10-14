@@ -14,7 +14,7 @@ Dem oberen Modell ist zu entnehmen, dass bei der Recherche viele Informationen �
 ### Zielsetzung/Vision
 
 ![alt text](https://github.com/Paul-Johne/EPWS2122RepkeJohne/blob/main/images/systemModell.PNG)
-Das oben dargestellte Systemmodell soll eine erste Möglichkeit und keine technologieabhängige Lösung implizieren. Grundsätzlich soll ein immaterielles Feuerwerk durch Augmented Reality erschaffen werden, welches von zunächst einer Person und in Zukunft von einer Gesellschaft immersiv aufgenommen werden kann. Somit wird ein Ausgleich zu den Restriktionen von Feuerwerk besonders für urbane Regionen geschaffen. Das Systemmodell zeigt im Kern eine Software, welche über eine Computer Vision Library wie OpenCV aufgenommene Bilddaten analysiert und spezifische Strukturen erkennt, welche Anfragen an einen Server beinhalten, welcher die 3D Modelle liefert. Zudem wurden Überlegungen im Bereich Geräusche und Geruch vorgenommen, um das Erlebnis immersiver zu gestalten.
+Das oben dargestellte Systemmodell soll eine erste Möglichkeit und keine technologieabhängige Lösung implizieren und wird voraussichtlich beim Erstellen von weiteren Artefakten angepasst. Grundsätzlich soll ein immaterielles Feuerwerk durch Augmented Reality erschaffen werden, welches von zunächst einer Person und in Zukunft von einer Gesellschaft immersiv aufgenommen werden kann. Somit wird ein Ausgleich zu den Restriktionen von Feuerwerk besonders für urbane Regionen geschaffen. Das Systemmodell zeigt im Kern eine Software, welche über eine Computer Vision Library wie OpenCV aufgenommene Bilddaten analysiert und spezifische Strukturen erkennt, welche Anfragen an einen Server beinhalten, welcher die 3D Modelle liefert. Zudem wurden Überlegungen im Bereich Geräusche und Geruch vorgenommen, um das Erlebnis immersiver zu gestalten.
 
 ### Relevanz
 
@@ -28,7 +28,16 @@ Die Deutschen geben jährlich 100 bis 137 Millionen Euro zu Silvester an Feuerwe
 
 ### Deliverables und Artefakte für das Audit 1
 
-...
+- Stakeholderanalyse
+  - Entdecken von direkten und indirekten Stakeholdern bezüglich des entstehenden Systems
+  - Personas
+- User Needs und Requirements
+  - Claims Analysis zur Schwerpunktsfindung
+- Proof of Concepts, Konzeptzeichnungen
+- erste Version eines Projektplans
+  - mögliche Risiken
+- Alleinstellungsmerkmale zur Konkurrenz
+- evtl. erste Versuche in der Entwicklungsumgebung Unity
 
 ### Literatur- und Quellenverzeichnis
 
