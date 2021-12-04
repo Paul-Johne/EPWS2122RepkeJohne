@@ -36,7 +36,7 @@ public class File_DownloadAndLoad : MonoBehaviour {
         yield return requestOBJ.Send();
         yield return requestMTL.Send();
 
-        if (requestOBJ.isError | requestMTL.isError) {
+        if (requestOBJ.isNetworkError | requestMTL.isNetworkError) {
             debug.text = "Download failed..";
         } else {
             debug.text = "Eh..download successful..?";
