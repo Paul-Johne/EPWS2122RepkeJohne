@@ -28,7 +28,7 @@ public class ObjDownloader : MonoBehaviour {
         print(filePath);
         SetQR_Data(ref vulcan_000, insertObjectName, "19dsvFQ-aR3OPttZDdPtKKz4C09OGUIL-", "10VLomNAhdQasyOavIcTH6nQEEyCCDm9X");
 
-        if (System.IO.File.Exists($"{Application.persistentDataPath}/3DModels/{insertObjectName}")) {
+        if (System.IO.File.Exists($"{Application.persistentDataPath}/3DModels/{insertObjectName}") == false) {
             print("Download to: " + filePath);
             await DownloadData(vulcan_000);
         } else {
