@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/testARFoundation.unity
-    guid: 6737c79c79fc8ef49a20ac14706b3509
+    path: Assets/Scenes/readingQR.unity
+    guid: 78dbb29d9517d894bab049ae048e9aef
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 59a0203b657ccb04e9a7aabeef68a01d, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 7ab79a440ff75674d8695253a5024ba8, type: 2}
