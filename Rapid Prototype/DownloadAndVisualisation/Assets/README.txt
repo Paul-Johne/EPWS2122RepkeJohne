@@ -1,6 +1,6 @@
 COPYRIGHTS:
 
-// mainScene
+// downloadOBJ
 
 1)	Skybox:				"Yokohama3" by Emil Persson
 	Lizenz:				CC BY 3.0 [http://creativecommons.org/licenses/by/3.0/]
@@ -18,27 +18,39 @@ COPYRIGHTS:
 						copies of the Software, and to permit persons to whom the Software is
 						furnished to do so, subject to the following conditions:
 
-						The above copyright notice and this permission notice shall be included in
+	Anmerkung:			The above copyright notice and this permission notice shall be included in
 						all copies or substantial portions of the Software.
-	Anmerkung:			Es wird sich das Recht vorbehalten, Änderungen an den Skripten des Plugins
+						Es wird sich das Recht vorbehalten, Änderungen an den Skripten des Plugins
 						zu tätigen, um der Logik des Projektes TidyShinyFireworks zu entsprechen.
 
 // testARFoundation
 
- 4)	Tutorial:			Getting Started With ARFoundation in Unity
+1)	Tutorial:			Getting Started With ARFoundation in Unity
 	Video:				[https://www.youtube.com/watch?v=Ml2UakwRxjk] by The Unity Workbench
 
- 5) AR Setup:			Basic Setup (AR Foundation)
+2)	AR Setup:			Basic Setup (AR Foundation)
 	Link:				[https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@3.1/manual/index.html#basic-setup]
 
-How does the program retrieve the data?
-- each 3D Model (.obj + .mtl) is stored in a folder on the company's Google Drive Account
-- a script downloads the folder for temporary usage (persistence still causes some issues)
+// readingQR
 
+1)	Tutorial:			How to create a QRcode scanner in Unity
+	Video:				Part 1: [https://www.youtube.com/watch?v=43qt62TbY7E]
+						Part 2: [https://www.youtube.com/watch?v=To7hoS_XQpU] by El Profesor Kudo
+	ZXing DLL:			[https://drive.google.com/file/d/1UB1j8Cs4g8x67caQFg412NGWIwC_-3af/view] by El Profesor Kudo
+
+// downloadAssetBundle
+
+1)	Tutorial:			ARFoundation Unity Tutorial: Asset Bundles
+	Video:				[https://www.youtube.com/watch?v=twzfpuaM-Js] by Third Aurora
+
+/* Source of obj and mtl Files */
 	Download Template:
-		https://drive.google.com/uc?export=download&id=<FILE_ID>
+		https://drive.google.com/uc?export=download&id= <FILE_ID>
 	Links:
 		vulcan_000 | Testobjekt
 	FILE_IDs:
 		[OBJ]	19dsvFQ-aR3OPttZDdPtKKz4C09OGUIL-
 		[MTL]	10VLomNAhdQasyOavIcTH6nQEEyCCDm9X
+
+/* Source of AssetBundle Files */
+...
