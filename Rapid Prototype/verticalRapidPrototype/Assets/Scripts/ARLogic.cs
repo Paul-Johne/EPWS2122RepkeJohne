@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
-public class ARTapToPlace : MonoBehaviour {
+public class ARLogic : MonoBehaviour {
 
     public GameObject placementIndicator;
     public GameObject objectToPlace;
@@ -14,16 +14,17 @@ public class ARTapToPlace : MonoBehaviour {
     private ARRaycastManager arRaycastManager;
     [SerializeField]
     TrackableType trackableType = TrackableType.Planes; // default
+    [SerializeField]
+    private GameObject buttonIgniteFirework;
     
     private Pose placementPose; // describes position and rotation in world space
     private bool placementPoseIsValid = false;
 
-    void Update() {
+    private GameObject loadedFirework;
+
+    private void Update() {
         UpdatePlacementPose();
         UpdatePlacementIndicator();
-
-        if (placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-            PlaceObject();
     }
 
     private void UpdatePlacementPose() {
@@ -36,8 +37,8 @@ public class ARTapToPlace : MonoBehaviour {
         if (placementPoseIsValid) {
             placementPose = hits[0].pose;
 
-            var cameraForward = arSessionOrigin.camera.transform.forward;
-            var cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
+            var cameraForward = arSessionOrigin.camera.transform.forward; // already normalized
+            var cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z); //.normalized;
 
             placementPose.rotation = Quaternion.LookRotation(cameraBearing);
         }
@@ -52,7 +53,18 @@ public class ARTapToPlace : MonoBehaviour {
         }
     }
 
-    void PlaceObject() {
-        Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+    public void OnPlaceObject() {
+        /*
+        if (placementPoseIsValid && Input.GetTouch(0).phase == TouchPhase.Ended) {
+            Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+            gameObject.SetActive(false);
+            buttonIgniteFirework.SetActive(true);
+        }*/
+        loadedFirework = Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+        buttonIgniteFirework.SetActive(true);
+    }
+
+    public void OnIgniteObject() {
+        loadedFirework.transform.GetChild(1).gameObject.SetActive(true);
     }
 }
