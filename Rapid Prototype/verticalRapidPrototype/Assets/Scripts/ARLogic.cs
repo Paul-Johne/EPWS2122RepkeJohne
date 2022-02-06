@@ -13,7 +13,9 @@ public class ARLogic : MonoBehaviour {
     [SerializeField]
     private ARRaycastManager arRaycastManager;
     [SerializeField]
-    TrackableType trackableType = TrackableType.Planes; // default
+    TrackableType trackableType = TrackableType.Planes;
+    [SerializeField]
+    private GameObject buttonPlaceFirework;
     [SerializeField]
     private GameObject buttonIgniteFirework;
     
@@ -54,17 +56,13 @@ public class ARLogic : MonoBehaviour {
     }
 
     public void OnPlaceObject() {
-        /*
-        if (placementPoseIsValid && Input.GetTouch(0).phase == TouchPhase.Ended) {
-            Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
-            gameObject.SetActive(false);
-            buttonIgniteFirework.SetActive(true);
-        }*/
         loadedFirework = Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+        buttonPlaceFirework.SetActive(false);
         buttonIgniteFirework.SetActive(true);
     }
 
     public void OnIgniteObject() {
-        loadedFirework.transform.GetChild(1).gameObject.SetActive(true);
+        /* Activated  */
+        //loadedFirework.transform.GetChild(1).gameObject.SetActive(true);
     }
 }

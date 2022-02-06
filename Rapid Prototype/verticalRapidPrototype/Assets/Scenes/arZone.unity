@@ -666,10 +666,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placementIndicator: {fileID: 1952287089}
-  objectToPlace: {fileID: 4424156806096017476, guid: b6fc7c2c58370954692d02b4182fc391, type: 3}
+  objectToPlace: {fileID: 0}
   arSessionOrigin: {fileID: 1553697068}
   arRaycastManager: {fileID: 1553697067}
   trackableType: 15
+  buttonPlaceFirework: {fileID: 688229232}
   buttonIgniteFirework: {fileID: 1914919679}
 --- !u!4 &804769159
 Transform:

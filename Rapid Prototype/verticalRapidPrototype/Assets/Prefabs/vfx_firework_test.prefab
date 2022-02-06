@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4424156806096017479}
   m_Layer: 0
-  m_Name: firework
+  m_Name: vfx_firework_test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
