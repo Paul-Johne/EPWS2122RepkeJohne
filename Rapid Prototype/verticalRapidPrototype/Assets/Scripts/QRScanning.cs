@@ -22,18 +22,23 @@ public class QRScanning : MonoBehaviour {
     private bool _isCamAvailable;
     private WebCamTexture _camTexture;
 
-    private AndroidJavaClass unityActivity;
-    private AndroidJavaClass toastClass;
-    private AndroidJavaObject toast;
+    private AndroidCameraLIB camFunctions;
+
+    private bool torchActive;
 
     private void Start() {
+        /* Code for Android Version */
 #if PLATFORM_ANDROID
         if (!Permission.HasUserAuthorizedPermission(Permission.Camera))
             Permission.RequestUserPermission(Permission.Camera);
 
-        unityActivity = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        toastClass = new AndroidJavaClass("android.widget.Toast");
+        camFunctions = new AndroidCameraLIB();
 #endif
+    }
+
+    private void OnDestroy() {
+        camFunctions.deactivateTorch();
+        torchActive = false;
     }
 
     private void Update() {
@@ -47,17 +52,18 @@ public class QRScanning : MonoBehaviour {
             return;
         }
 
-        // set aspectRatio
+        /* Updates video if flipped */
+        // Set aspectRatio
         float ratio = (float)_camTexture.width / (float)_camTexture.height;
         aspectRatioFitter.aspectRatio = ratio;
-        // rotation of raw image
+        // Rotation of raw image
         int orientation = -_camTexture.videoRotationAngle;
         // Z-Roll
         camImage.rectTransform.localEulerAngles = new Vector3(0, 0, orientation);
     }
 
     private void SetCamera() {
-        // trying to access cameras
+        // Trying to access cameras
         WebCamDevice[] devices = WebCamTexture.devices;
 
         if (devices.Length == 0) {
@@ -74,7 +80,7 @@ public class QRScanning : MonoBehaviour {
             }
         }
 
-        // starting camera on the back
+        // Starting back camera
         if (_camTexture != null) {
             _isCamAvailable = true;
             _camTexture.Play();
@@ -99,24 +105,20 @@ public class QRScanning : MonoBehaviour {
                 textDebug.text = "Camera didn't recognize QR Code";
             }
         } catch {
-            textDebug.text = "Try Block failed";
+            textDebug.text = "Scanning failed";
         }
     }
 
     /* Turns on the Torch of the mobile device if available */
     public void OnClickTorch() {
 #if PLATFORM_ANDROID
-        object[] toastParams = new object[3];
-
-        // Setup for Toast.makeText()
-        toastParams[0] = unityActivity.GetStatic<AndroidJavaObject>("currentActivity");
-        toastParams[1] = "Camera torch was activated";
-        toastParams[2] = toastClass.GetStatic<int>("LENGTH_LONG"); // Toast.LENGTH_LONG
-
-        toast = toastClass.CallStatic<AndroidJavaObject>("makeText", toastParams);
-        toast.Call("show");
-
-        // More logic..
+        if (!torchActive) {
+            camFunctions.activateTorch();
+            torchActive = true;
+        } else {
+            camFunctions.deactivateTorch();
+            torchActive = false;
+        }
 #endif
     }
 }
