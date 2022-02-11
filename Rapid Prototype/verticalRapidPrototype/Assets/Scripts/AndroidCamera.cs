@@ -62,31 +62,3 @@ public class AndroidCameraLIB {
 }
 
 #endif
-
-/* ############ TRASH ############
- 
-    public void activateTorch(int camID) {
-        //WebCamDevice[] devices = WebCamTexture.devices;
-        backFaceCamera = cameraClass.CallStatic<AndroidJavaObject>("open", camID);
-
-        if (backFaceCamera != null) {
-            backFaceCameraParameters = backFaceCamera.Call<AndroidJavaObject>("getParameters");
-            backFaceCameraParameters.Call("setFlashMode", "torch");
-
-            backFaceCamera.Call("setParameters", backFaceCameraParameters);
-            backFaceCamera.Call("startPreview");
-
-            this.makeToast("Flashlight was started");
-        } else {
-            this.makeToast("Backfacing Camera wasn't detected!");
-        }
-    }
-
-    public void deactivateTorch() {
-        backFaceCamera.Call("stopPreview");
-        backFaceCamera.Call("release");
-
-        this.makeToast("Flashlight was stopped");
-    } 
-
- */

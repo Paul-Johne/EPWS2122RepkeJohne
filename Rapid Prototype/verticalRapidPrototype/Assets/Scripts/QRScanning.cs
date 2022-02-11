@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 using ZXing;
@@ -18,13 +19,19 @@ public class QRScanning : MonoBehaviour {
     private Text textDebug;
     [SerializeField]
     private GameObject buttonToAR;
+    [SerializeField]
+    private GameObject buttonStartScan;
+    [SerializeField]
+    private GameObject buttonStopScan;
 
     private bool _isCamAvailable;
     private WebCamTexture _camTexture;
 
     private AndroidCameraLIB camFunctions;
-
     private bool torchActive;
+
+    Thread threadOfScan;
+    IBarcodeReader qrReader;
 
     private void Start() {
         /* Code for Android Version */
@@ -34,11 +41,16 @@ public class QRScanning : MonoBehaviour {
 
         camFunctions = new AndroidCameraLIB();
 #endif
+        qrReader = new BarcodeReader();
     }
 
     private void OnDestroy() {
-        camFunctions.deactivateTorch();
-        torchActive = false;
+        if (torchActive == true) {
+            camFunctions.deactivateTorch();
+            torchActive = false;
+        }
+        if (threadOfScan.IsAlive)
+            threadOfScan.Abort();
     }
 
     private void Update() {
@@ -73,7 +85,7 @@ public class QRScanning : MonoBehaviour {
 
         for (int i = 0; i < devices.Length; i++) {
             if (!devices[i].isFrontFacing) {
-                _camTexture = new WebCamTexture(devices[i].name, 
+                _camTexture = new WebCamTexture(devices[i].name,
                                                 (int)scanArea.rect.width, 
                                                 (int)scanArea.rect.height);
                 break;
@@ -91,22 +103,33 @@ public class QRScanning : MonoBehaviour {
     }
 
     public void OnClickScan() {
-        Scan();
+        threadOfScan = new Thread(Scan);
+        threadOfScan.Start();
+    }
+
+    public void OnClickStopScan() {
+        threadOfScan.Abort();
+        textDebug.text = "Stopped scanning";
+        buttonStopScan.SetActive(false);
+        buttonStartScan.SetActive(true);
     }
 
     private void Scan() {
-        try {
-            IBarcodeReader qrReader = new BarcodeReader();
-            Result res = qrReader.Decode(_camTexture.GetPixels32(), _camTexture.width, _camTexture.height);
-            if (res != null) {
-                textDebug.text = res.Text;
+        Result qrContent;
+        textDebug.text = "Scanning..";
+        buttonStartScan.SetActive(false);
+        buttonStopScan.SetActive(true);
+
+        do {
+            qrContent = qrReader.Decode(_camTexture.GetPixels32(), _camTexture.width, _camTexture.height);
+            if (qrContent != null) {
+                textDebug.text = qrContent.Text;
                 buttonToAR.SetActive(true);
-            } else {
-                textDebug.text = "Camera didn't recognize QR Code";
             }
-        } catch {
-            textDebug.text = "Scanning failed";
-        }
+        } while (qrContent == null);
+
+        buttonStopScan.SetActive(false);
+        buttonStartScan.SetActive(true);
     }
 
     /* Turns on the Torch of the mobile device if available */
