@@ -23,6 +23,8 @@ public class QRScanning : MonoBehaviour {
     private GameObject buttonStartScan;
     [SerializeField]
     private GameObject buttonStopScan;
+    [SerializeField]
+    private GameObject buttonStartDownload;
 
     private bool _isCamAvailable;
     private WebCamTexture _camTexture;
@@ -119,6 +121,7 @@ public class QRScanning : MonoBehaviour {
         textDebug.text = "Scanning..";
         buttonStartScan.SetActive(false);
         buttonStopScan.SetActive(true);
+        buttonStartDownload.SetActive(false);
 
         do {
             qrContent = qrReader.Decode(_camTexture.GetPixels32(), _camTexture.width, _camTexture.height);
@@ -130,6 +133,7 @@ public class QRScanning : MonoBehaviour {
 
         buttonStopScan.SetActive(false);
         buttonStartScan.SetActive(true);
+        buttonStartDownload.SetActive(true);
     }
 
     /* Turns on the Torch of the mobile device if available */
