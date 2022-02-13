@@ -17,8 +17,7 @@ public class QRScanning : MonoBehaviour {
     private RectTransform scanArea;
     [SerializeField]
     private Text textDebug;
-    [SerializeField]
-    private GameObject buttonToAR;
+    
     [SerializeField]
     private GameObject buttonStartScan;
     [SerializeField]
@@ -125,10 +124,8 @@ public class QRScanning : MonoBehaviour {
 
         do {
             qrContent = qrReader.Decode(_camTexture.GetPixels32(), _camTexture.width, _camTexture.height);
-            if (qrContent != null) {
+            if (qrContent != null)
                 textDebug.text = qrContent.Text;
-                buttonToAR.SetActive(true);
-            }
         } while (qrContent == null);
 
         buttonStopScan.SetActive(false);

@@ -1,61 +1,66 @@
 using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
 /// <summary>
-/// Downloads the AssetBundle after acquiring the GoogleDrive-id from an QR code.
+/// Downloads the AssetBundle after acquiring the GoogleDrive ID from a QR code.
 /// </summary>
 public class Downloader : MonoBehaviour
 {
     [SerializeField]
     private GameObject buttonStartDownload;
     [SerializeField]
+    private GameObject buttonToAR;
+    [SerializeField]
     private Text textDebug;
 
-    private string GD_DownloadLink = "https://drive.google.com/uc?export=download&id=";
+    private string rawDownloadLink = "https://drive.google.com/uc?export=download&id=";
+    private string storagePath;
 
-    private string assetBundleGD_ID;
-
-    private IEnumerator GetAssetBundle(string link)
-    {
-        UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(link);
-        yield return request.SendWebRequest();
-
-        if(request.result == UnityWebRequest.Result.ConnectionError)
-        {
-            Debug.Log("Network Error!");
-        }
-        else
-        {
-            AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(request);
-            if(bundle != null)
-            {
-                string rootAssetBundlePath = bundle.GetAllAssetNames()[0];
-                Debug.Log(rootAssetBundlePath);
-                Debug.Log("Download completed!");
-            }
-            else
-            {
-                Debug.Log("Not a valid AssetBundle");
-            }
-        }
+    private void Start() {
+        storagePath = Path.Combine(Application.persistentDataPath, "3DModels");
     }
 
-    private void DownloadAssetBundle()
-    {
-        assetBundleGD_ID = textDebug.text;
-        Debug.Log(assetBundleGD_ID);
-        string assetBundleLink = GD_DownloadLink + assetBundleGD_ID;
-        Debug.Log(assetBundleLink);
-        StartCoroutine(GetAssetBundle(assetBundleLink));
-    }
-
-    public void OnClickDownload()
-    {
-        DownloadAssetBundle();
+    public async void OnClickDownload() {
+        if (!File.Exists(Path.Combine(storagePath, textDebug.text))) {
+            await DownloadAssetBundle(textDebug.text);
+        } else {
+            textDebug.text = "The scanned Firework already exists on your device";
+        }
 
         buttonStartDownload.SetActive(false);
+        buttonToAR.SetActive(true);
+    }
+
+    private async Task DownloadAssetBundle(string currentID) {
+        var downloadLink = $"{rawDownloadLink}{currentID}";
+        var taskInspector = new Task<UnityWebRequest>[1];
+
+        UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(downloadLink);
+        
+        taskInspector[0] = StartDownload(request);
+        await Task.WhenAll(taskInspector);
+
+        if (taskInspector[0].Result.result == UnityWebRequest.Result.ConnectionError)
+            textDebug.text = $"Download failed: {request.error}";
+        else
+            textDebug.text = "Finished download";
+    }
+
+    private async Task<UnityWebRequest> StartDownload(UnityWebRequest request) {
+        var operation = request.SendWebRequest();
+        while (!operation.isDone)
+            await Task.Yield();
+
+        if (request.result != UnityWebRequest.Result.ConnectionError) {
+            AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(request);
+            if (bundle != null) {
+                // TODO(reason: Save on persistentDataPath)
+            }
+        }
+        return request;
     }
 }
