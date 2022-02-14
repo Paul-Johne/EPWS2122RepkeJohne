@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Threading.Tasks;
 using System.IO;
 using UnityEngine;
@@ -22,16 +21,23 @@ public class Downloader : MonoBehaviour
 
     private void Start() {
         storagePath = Path.Combine(Application.persistentDataPath, "3DModels");
+
+        if (!Directory.Exists(storagePath)) {
+            Directory.CreateDirectory(storagePath);
+            textDebug.text = "Directory for fireworks was created";
+        }
     }
 
     public async void OnClickDownload() {
-        if (!File.Exists(Path.Combine(storagePath, textDebug.text))) {
-            await DownloadAssetBundle(textDebug.text);
+        string scannedID = textDebug.text;
+
+        if (!File.Exists(Path.Combine(storagePath, scannedID) + ".unity3d")) {
+            buttonStartDownload.SetActive(false);
+            await DownloadAssetBundle(scannedID);
         } else {
             textDebug.text = "The scanned Firework already exists on your device";
         }
 
-        buttonStartDownload.SetActive(false);
         buttonToAR.SetActive(true);
     }
 
@@ -39,27 +45,27 @@ public class Downloader : MonoBehaviour
         var downloadLink = $"{rawDownloadLink}{currentID}";
         var taskInspector = new Task<UnityWebRequest>[1];
 
-        UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(downloadLink);
-        
-        taskInspector[0] = StartDownload(request);
+        UnityWebRequest request = UnityWebRequest.Get(downloadLink);
+
+        taskInspector[0] = StartDownload(request, currentID);
         await Task.WhenAll(taskInspector);
 
-        if (taskInspector[0].Result.result == UnityWebRequest.Result.ConnectionError)
+        if (taskInspector[0].Result.result != UnityWebRequest.Result.Success)
             textDebug.text = $"Download failed: {request.error}";
         else
             textDebug.text = "Finished download";
     }
 
-    private async Task<UnityWebRequest> StartDownload(UnityWebRequest request) {
+    private async Task<UnityWebRequest> StartDownload(UnityWebRequest request, string fileName) {
+        var filePath = Path.Combine(storagePath, fileName) + ".unity3d";
+        request.downloadHandler = new DownloadHandlerBuffer();
+        
         var operation = request.SendWebRequest();
         while (!operation.isDone)
             await Task.Yield();
 
-        if (request.result != UnityWebRequest.Result.ConnectionError) {
-            AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(request);
-            if (bundle != null) {
-                // TODO(reason: Save on persistentDataPath)
-            }
+        if (request.result == UnityWebRequest.Result.Success) {
+            File.WriteAllBytes(filePath, request.downloadHandler.data);
         }
         return request;
     }
