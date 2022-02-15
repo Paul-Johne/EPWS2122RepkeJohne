@@ -1,5 +1,5 @@
-using System.Threading.Tasks;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
@@ -7,8 +7,8 @@ using UnityEngine.Networking;
 /// <summary>
 /// Downloads the AssetBundle after acquiring the GoogleDrive ID from a QR code.
 /// </summary>
-public class Downloader : MonoBehaviour
-{
+public class Downloader : MonoBehaviour {
+
     [SerializeField]
     private GameObject buttonStartDownload;
     [SerializeField]
@@ -17,7 +17,10 @@ public class Downloader : MonoBehaviour
     private Text textDebug;
 
     private string rawDownloadLink = "https://drive.google.com/uc?export=download&id=";
-    private string storagePath;
+
+    /* accessible global variables */
+    public static string storagePath;
+    public static string filePath;
 
     private void Start() {
         storagePath = Path.Combine(Application.persistentDataPath, "3DModels");
@@ -25,6 +28,8 @@ public class Downloader : MonoBehaviour
         if (!Directory.Exists(storagePath)) {
             Directory.CreateDirectory(storagePath);
             textDebug.text = "Directory for fireworks was created";
+        } else {
+            textDebug.text = "Directory for fireworks exists on your device";
         }
     }
 
@@ -35,7 +40,9 @@ public class Downloader : MonoBehaviour
             buttonStartDownload.SetActive(false);
             await DownloadAssetBundle(scannedID);
         } else {
+            filePath = Path.Combine(storagePath, scannedID) + ".unity3d";
             textDebug.text = "The scanned Firework already exists on your device";
+            buttonStartDownload.SetActive(false);
         }
 
         buttonToAR.SetActive(true);
@@ -57,7 +64,7 @@ public class Downloader : MonoBehaviour
     }
 
     private async Task<UnityWebRequest> StartDownload(UnityWebRequest request, string fileName) {
-        var filePath = Path.Combine(storagePath, fileName) + ".unity3d";
+        filePath = Path.Combine(storagePath, fileName) + ".unity3d";
         request.downloadHandler = new DownloadHandlerBuffer();
         
         var operation = request.SendWebRequest();

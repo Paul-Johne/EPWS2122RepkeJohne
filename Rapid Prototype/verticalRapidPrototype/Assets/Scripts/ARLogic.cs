@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
 public class ARLogic : MonoBehaviour {
 
-    public GameObject placementIndicator;
-    public GameObject objectToPlace;
+    /* Debugging Textview */
+    [SerializeField]
+    private Text textdebug;
 
+    /* References to Components of scene's AR Session Origin */
     [SerializeField]
     private ARSessionOrigin arSessionOrigin;
     [SerializeField]
@@ -15,18 +18,26 @@ public class ARLogic : MonoBehaviour {
     [SerializeField]
     TrackableType trackableType = TrackableType.Planes;
     [SerializeField]
+    private ARTrackedImageManager arTrackedImageManager;
+
+
+    /* Button References to enable/disable them */
+    [SerializeField]
     private GameObject buttonPlaceFirework;
     [SerializeField]
     private GameObject buttonIgniteFirework;
-    
-    private Pose placementPose; // describes position and rotation in world space
+
+    /* DEPRECATED: Placing Gameobject inside of AR Scene */
+    private Pose placementPose;
     private bool placementPoseIsValid = false;
+    public GameObject placementIndicator;
 
-    private GameObject loadedFirework;
+    private string currentFilePath;
+    private GameObject currentFirework;
 
-    private void Update() {
-        UpdatePlacementPose();
-        UpdatePlacementIndicator();
+    private void Start() {
+        currentFilePath = Downloader.filePath;
+        textdebug.text = $"current filepath: {currentFilePath}";
     }
 
     private void UpdatePlacementPose() {
@@ -40,7 +51,7 @@ public class ARLogic : MonoBehaviour {
             placementPose = hits[0].pose;
 
             var cameraForward = arSessionOrigin.camera.transform.forward; // already normalized
-            var cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z); //.normalized;
+            var cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z); //.normalized
 
             placementPose.rotation = Quaternion.LookRotation(cameraBearing);
         }
@@ -56,13 +67,25 @@ public class ARLogic : MonoBehaviour {
     }
 
     public void OnPlaceObject() {
-        loadedFirework = Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
         buttonPlaceFirework.SetActive(false);
+        AssetBundle bundle = AssetBundle.LoadFromFile(currentFilePath);
+
+        if (bundle == null) {
+            // passiert beim 2. Mal mit selben currentFilePath => LoadFromFile nur 1x pro Appstart?
+            textdebug.text = "LoadFromFile didn't work";
+            return;
+        } else {
+            textdebug.text = "Kevin, ich brauche hier wohl deine Hilfe..";
+            // TODO( KEVIN??? )
+            //currentFirework = bundle.LoadAllAssets<GameObject>().GetValue(0) as GameObject;
+            //arTrackedImageManager.trackedImagePrefab = currentFirework;
+        }
+        
         buttonIgniteFirework.SetActive(true);
     }
 
     public void OnIgniteObject() {
-        /* Activated  */
-        //loadedFirework.transform.GetChild(1).gameObject.SetActive(true);
+        //currentFirework.transform.GetChild(1).gameObject.SetActive(true);
+        textdebug.text = "BOOM!";
     }
 }

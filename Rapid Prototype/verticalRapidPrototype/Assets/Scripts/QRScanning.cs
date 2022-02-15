@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,8 @@ public class QRScanning : MonoBehaviour {
     private GameObject buttonStopScan;
     [SerializeField]
     private GameObject buttonStartDownload;
+    [SerializeField]
+    private GameObject buttonToAR;
 
     private bool _isCamAvailable;
     private WebCamTexture _camTexture;
@@ -99,7 +102,6 @@ public class QRScanning : MonoBehaviour {
             _camTexture.Play();
             camImage.texture = _camTexture;
             camImage.color = new Color(255, 255, 255, 255);
-            textDebug.text = "Ready";
         }
     }
 
@@ -131,6 +133,11 @@ public class QRScanning : MonoBehaviour {
         buttonStopScan.SetActive(false);
         buttonStartScan.SetActive(true);
         buttonStartDownload.SetActive(true);
+
+        if (File.Exists(Path.Combine(Application.persistentDataPath, textDebug.text) + ".unity3d")) {
+            Downloader.filePath = Path.Combine(Downloader.storagePath, textDebug.text) + ".unity3d";
+            buttonToAR.SetActive(true);
+        }
     }
 
     /* Turns on the Torch of the mobile device if available */
