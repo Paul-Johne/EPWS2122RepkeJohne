@@ -35,6 +35,7 @@ public class Downloader : MonoBehaviour {
 
     public async void OnClickDownload() {
         string scannedID = textDebug.text;
+        // string scannedID = "1bX9bhC9Wsfg0S3pRRhoxEvuchLviBfjU";
 
         if (!File.Exists(Path.Combine(storagePath, scannedID) + ".unity3d")) {
             buttonStartDownload.SetActive(false);

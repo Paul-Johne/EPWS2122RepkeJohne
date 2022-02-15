@@ -75,17 +75,18 @@ public class ARLogic : MonoBehaviour {
             textdebug.text = "LoadFromFile didn't work";
             return;
         } else {
-            textdebug.text = "Kevin, ich brauche hier wohl deine Hilfe..";
+            textdebug.text = "Started LoadFromFile..";
             // TODO( KEVIN??? )
-            //currentFirework = bundle.LoadAllAssets<GameObject>().GetValue(0) as GameObject;
-            //arTrackedImageManager.trackedImagePrefab = currentFirework;
+            currentFirework = bundle.LoadAllAssets<GameObject>().GetValue(0) as GameObject; //wenn das nicht klappt, mal mit Instantiate() versuchen
+            arTrackedImageManager.trackedImagePrefab = currentFirework;
         }
-        
+
+        bundle.Unload(false);
         buttonIgniteFirework.SetActive(true);
     }
 
     public void OnIgniteObject() {
-        //currentFirework.transform.GetChild(1).gameObject.SetActive(true);
+        currentFirework.transform.GetChild(1).gameObject.SetActive(true);
         textdebug.text = "BOOM!";
     }
 }
