@@ -67,6 +67,7 @@ public class ARLogic : MonoBehaviour {
     }
 
     public void OnPlaceObject() {
+        /*
         buttonPlaceFirework.SetActive(false);
         AssetBundle bundle = AssetBundle.LoadFromFile(currentFilePath);
 
@@ -83,10 +84,12 @@ public class ARLogic : MonoBehaviour {
 
         bundle.Unload(false);
         buttonIgniteFirework.SetActive(true);
+        */
     }
 
     public void OnIgniteObject() {
-        currentFirework.transform.GetChild(1).gameObject.SetActive(true);
+        //currentFirework.transform.GetChild(1).gameObject.SetActive(true);
+        //arTrackedImageManager.trackedImagePrefab.transform.GetChild(1).gameObject.SetActive(true);
         textdebug.text = "BOOM!";
     }
 }
