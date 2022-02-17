@@ -551,7 +551,7 @@ GameObject:
   - component: {fileID: 804769159}
   - component: {fileID: 804769158}
   m_Layer: 0
-  m_Name: '[ Placement Handler ]'
+  m_Name: '[ AR Handler ]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -570,13 +570,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textdebug: {fileID: 1123277657}
-  arSessionOrigin: {fileID: 1553697068}
-  arRaycastManager: {fileID: 1553697067}
-  trackableType: 15
-  arTrackedImageManager: {fileID: 1553697070}
   buttonPlaceFirework: {fileID: 688229232}
   buttonIgniteFirework: {fileID: 1914919679}
-  placementIndicator: {fileID: 9091106638144577456, guid: 4ac64ed39c1d056409d9867480770523, type: 3}
+  sessionOrigin: {fileID: 1553697068}
+  xrRefImgLib: {fileID: 11400000, guid: c234620949564fb49bdca50acfa2d47f, type: 2}
+  trackedImagePrefab: {fileID: 6924885091725051120, guid: 3fbce0e08c2745d41b13def9b2dbe0f8, type: 3}
 --- !u!4 &804769159
 Transform:
   m_ObjectHideFlags: 0
@@ -908,9 +906,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1553697069}
   - component: {fileID: 1553697068}
-  - component: {fileID: 1553697067}
-  - component: {fileID: 1553697066}
-  - component: {fileID: 1553697070}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -918,33 +913,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1553697066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1553697065}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PlanePrefab: {fileID: 0}
-  m_DetectionMode: 1
---- !u!114 &1553697067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1553697065}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa17d122634046b4a8e23048891fafc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RaycastPrefab: {fileID: 0}
 --- !u!114 &1553697068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -973,21 +941,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1553697070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1553697065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dea56a9eaadd1c439095de4f9a371cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SerializedLibrary: {fileID: 11400000, guid: c234620949564fb49bdca50acfa2d47f, type: 2}
-  m_MaxNumberOfMovingImages: 1
-  m_TrackedImagePrefab: {fileID: 6924885091725051120, guid: 3fbce0e08c2745d41b13def9b2dbe0f8, type: 3}
 --- !u!1 &1611225918
 GameObject:
   m_ObjectHideFlags: 0

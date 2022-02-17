@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
@@ -10,27 +9,19 @@ public class ARLogic : MonoBehaviour {
     [SerializeField]
     private Text textdebug;
 
-    /* References to Components of scene's AR Session Origin */
-    [SerializeField]
-    private ARSessionOrigin arSessionOrigin;
-    [SerializeField]
-    private ARRaycastManager arRaycastManager;
-    [SerializeField]
-    TrackableType trackableType = TrackableType.Planes;
-    [SerializeField]
-    private ARTrackedImageManager arTrackedImageManager;
-
-
     /* Button References to enable/disable them */
     [SerializeField]
     private GameObject buttonPlaceFirework;
     [SerializeField]
     private GameObject buttonIgniteFirework;
 
-    /* DEPRECATED: Placing Gameobject inside of AR Scene */
-    private Pose placementPose;
-    private bool placementPoseIsValid = false;
-    public GameObject placementIndicator;
+    /* TrackedImage Variables */
+    [SerializeField]
+    private ARSessionOrigin sessionOrigin;
+    [SerializeField]
+    private XRReferenceImageLibrary xrRefImgLib;
+    public GameObject trackedImagePrefab;
+    private ARTrackedImageManager trackedImageManager;
 
     private string currentFilePath;
     private GameObject currentFirework;
@@ -40,7 +31,62 @@ public class ARLogic : MonoBehaviour {
         textdebug.text = $"current filepath: {currentFilePath}";
     }
 
-    private void UpdatePlacementPose() {
+    public void OnPlaceObject() {
+        /*
+        buttonPlaceFirework.SetActive(false);
+        AssetBundle bundle = AssetBundle.LoadFromFile(currentFilePath);
+
+        if (bundle == null) {
+            textdebug.text = "LoadFromFile didn't work";
+            return;
+        } else {
+            textdebug.text = "Started LoadFromFile..";
+            currentFirework = bundle.LoadAllAssets<GameObject>().GetValue(0) as GameObject;
+            arTrackedImageManager.trackedImagePrefab = currentFirework;
+        }
+
+        bundle.Unload(false);
+        buttonIgniteFirework.SetActive(true);
+        */
+        trackedImageManager = sessionOrigin.gameObject.AddComponent<ARTrackedImageManager>();
+        trackedImageManager.referenceLibrary = trackedImageManager.CreateRuntimeLibrary(xrRefImgLib);
+        trackedImageManager.requestedMaxNumberOfMovingImages = 1;
+        trackedImageManager.trackedImagePrefab = trackedImagePrefab;
+
+        trackedImageManager.enabled = true;
+
+        buttonPlaceFirework.SetActive(false);
+        buttonIgniteFirework.SetActive(true);
+    }
+
+    private void LoadPrefabFromAsset() {
+
+    }
+
+    public void OnIgniteObject() {
+        foreach (var i in trackedImageManager.trackables) {
+            i.gameObject.transform.parent.localScale = Vector3.one * 0.05f; // might be buggy
+            i.gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
+        }
+        textdebug.text = "BOOM!";
+    }
+}
+
+/* useless code */
+/*
+
+[SerializeField]
+    private ARSessionOrigin arSessionOrigin;
+[SerializeField]
+    private ARRaycastManager arRaycastManager;
+[SerializeField]
+    TrackableType trackableType = TrackableType.Planes;
+
+private Pose placementPose;
+private bool placementPoseIsValid = false;
+public GameObject placementIndicator;
+
+private void UpdatePlacementPose() {
         var screenCenter = arSessionOrigin.camera.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
         var hits = new List<ARRaycastHit>();
 
@@ -66,30 +112,4 @@ public class ARLogic : MonoBehaviour {
         }
     }
 
-    public void OnPlaceObject() {
-        /*
-        buttonPlaceFirework.SetActive(false);
-        AssetBundle bundle = AssetBundle.LoadFromFile(currentFilePath);
-
-        if (bundle == null) {
-            // passiert beim 2. Mal mit selben currentFilePath => LoadFromFile nur 1x pro Appstart?
-            textdebug.text = "LoadFromFile didn't work";
-            return;
-        } else {
-            textdebug.text = "Started LoadFromFile..";
-            // TODO( KEVIN??? )
-            currentFirework = bundle.LoadAllAssets<GameObject>().GetValue(0) as GameObject; //wenn das nicht klappt, mal mit Instantiate() versuchen
-            arTrackedImageManager.trackedImagePrefab = currentFirework;
-        }
-
-        bundle.Unload(false);
-        buttonIgniteFirework.SetActive(true);
-        */
-    }
-
-    public void OnIgniteObject() {
-        //currentFirework.transform.GetChild(1).gameObject.SetActive(true);
-        //arTrackedImageManager.trackedImagePrefab.transform.GetChild(1).gameObject.SetActive(true);
-        textdebug.text = "BOOM!";
-    }
-}
+ */

@@ -37,11 +37,11 @@ public class Downloader : MonoBehaviour {
         string scannedID = textDebug.text;
         // string scannedID = "1bX9bhC9Wsfg0S3pRRhoxEvuchLviBfjU";
 
-        if (!File.Exists(Path.Combine(storagePath, scannedID) + ".unity3d")) {
+        if (!File.Exists(Path.Combine(storagePath, scannedID))) {
             buttonStartDownload.SetActive(false);
             await DownloadAssetBundle(scannedID);
         } else {
-            filePath = Path.Combine(storagePath, scannedID) + ".unity3d";
+            filePath = Path.Combine(storagePath, scannedID);
             textDebug.text = "The scanned Firework already exists on your device";
             buttonStartDownload.SetActive(false);
         }
@@ -65,7 +65,7 @@ public class Downloader : MonoBehaviour {
     }
 
     private async Task<UnityWebRequest> StartDownload(UnityWebRequest request, string fileName) {
-        filePath = Path.Combine(storagePath, fileName) + ".unity3d";
+        filePath = Path.Combine(storagePath, fileName);
         request.downloadHandler = new DownloadHandlerBuffer();
         
         var operation = request.SendWebRequest();
