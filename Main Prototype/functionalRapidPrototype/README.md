@@ -3,7 +3,7 @@
 
 ![](https://github.com/Paul-Johne/EPWS2122RepkeJohne/blob/main/images/requiredUnityVersion.png)
 
-- Open project folder "verticalRapidPrototype"
+- Open Project Folder "Main Prototype/functionalRapidPrototype"
 - Open Build Settings
 
 ![](https://github.com/Paul-Johne/EPWS2122RepkeJohne/blob/main/images/gotoBuildSettings.png)
