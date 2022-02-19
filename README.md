@@ -1,5 +1,9 @@
 # EPWS2122RepkeJohne
 Development Title: Tidy Shiny Fireworks
+
+## Plakat
+![alt text](https://github.com/Paul-Johne/EPWS2122RepkeJohne/blob/main/Artefakte/WS2122_RepkeJohne_Plakat.jpg)
+
 ## Exposé
 ### Darstellung des Problemraums
 
