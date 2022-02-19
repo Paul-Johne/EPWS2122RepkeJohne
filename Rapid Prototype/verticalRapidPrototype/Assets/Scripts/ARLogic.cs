@@ -24,35 +24,22 @@ public class ARLogic : MonoBehaviour {
     private ARTrackedImageManager trackedImageManager;
 
     private string currentFilePath;
-    private GameObject currentFirework;
+
+    private AndroidCameraLIB camFunction;
 
     private void Start() {
         currentFilePath = Downloader.filePath;
         textdebug.text = $"current filepath: {currentFilePath}";
+        camFunction = new AndroidCameraLIB();
     }
 
     public void OnPlaceObject() {
-        /*
-        buttonPlaceFirework.SetActive(false);
-        AssetBundle bundle = AssetBundle.LoadFromFile(currentFilePath);
+        LoadPrefabFromAsset();
 
-        if (bundle == null) {
-            textdebug.text = "LoadFromFile didn't work";
-            return;
-        } else {
-            textdebug.text = "Started LoadFromFile..";
-            currentFirework = bundle.LoadAllAssets<GameObject>().GetValue(0) as GameObject;
-            arTrackedImageManager.trackedImagePrefab = currentFirework;
-        }
-
-        bundle.Unload(false);
-        buttonIgniteFirework.SetActive(true);
-        */
         trackedImageManager = sessionOrigin.gameObject.AddComponent<ARTrackedImageManager>();
         trackedImageManager.referenceLibrary = trackedImageManager.CreateRuntimeLibrary(xrRefImgLib);
         trackedImageManager.requestedMaxNumberOfMovingImages = 1;
         trackedImageManager.trackedImagePrefab = trackedImagePrefab;
-
         trackedImageManager.enabled = true;
 
         buttonPlaceFirework.SetActive(false);
@@ -60,56 +47,28 @@ public class ARLogic : MonoBehaviour {
     }
 
     private void LoadPrefabFromAsset() {
+        // buttonPlaceFirework.SetActive(false);
+        AssetBundle loadedAssetBundle = AssetBundle.LoadFromFile(currentFilePath);
 
+        if (loadedAssetBundle == null) {
+            textdebug.text = "Failed to load AssetBundle!";
+            return;
+        }
+
+        textdebug.text = "AssetBundle was loaded";
+
+        trackedImagePrefab = loadedAssetBundle.LoadAsset<GameObject>(loadedAssetBundle.GetAllAssetNames().GetValue(0) as string);
+        loadedAssetBundle.Unload(false);
+
+        textdebug.text = $"Firework placed on QR Code: {trackedImagePrefab.transform.hierarchyCount}";
     }
 
     public void OnIgniteObject() {
         foreach (var i in trackedImageManager.trackables) {
-            i.gameObject.transform.parent.localScale = Vector3.one * 0.05f; // might be buggy
             i.gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
         }
         textdebug.text = "BOOM!";
+
+        buttonIgniteFirework.SetActive(false);
     }
 }
-
-/* useless code */
-/*
-
-[SerializeField]
-    private ARSessionOrigin arSessionOrigin;
-[SerializeField]
-    private ARRaycastManager arRaycastManager;
-[SerializeField]
-    TrackableType trackableType = TrackableType.Planes;
-
-private Pose placementPose;
-private bool placementPoseIsValid = false;
-public GameObject placementIndicator;
-
-private void UpdatePlacementPose() {
-        var screenCenter = arSessionOrigin.camera.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
-        var hits = new List<ARRaycastHit>();
-
-        arRaycastManager.Raycast(screenCenter, hits, trackableType);
-
-        placementPoseIsValid = hits.Count > 0;
-        if (placementPoseIsValid) {
-            placementPose = hits[0].pose;
-
-            var cameraForward = arSessionOrigin.camera.transform.forward; // already normalized
-            var cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z); //.normalized
-
-            placementPose.rotation = Quaternion.LookRotation(cameraBearing);
-        }
-    }
-
-    private void UpdatePlacementIndicator() {
-        if (placementPoseIsValid) {
-            placementIndicator.SetActive(true);
-            placementIndicator.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
-        } else {
-            placementIndicator.SetActive(true);
-        }
-    }
-
- */

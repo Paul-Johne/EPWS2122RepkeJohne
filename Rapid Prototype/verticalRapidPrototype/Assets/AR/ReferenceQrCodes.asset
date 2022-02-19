@@ -19,9 +19,9 @@ MonoBehaviour:
       m_GuidLow: 4806508681461620175
       m_GuidHigh: 10852847451361981575
     m_SerializedTextureGuid:
-      m_GuidLow: 11426935388520429568
-      m_GuidHigh: 14458003213109666920
+      m_GuidLow: 5468729230750751632
+      m_GuidHigh: 9903298919253143256
     m_Size: {x: 0, y: 0}
     m_SpecifySize: 0
-    m_Name: vulcan_000
+    m_Name: vulcan_001
     m_Texture: {fileID: 0}

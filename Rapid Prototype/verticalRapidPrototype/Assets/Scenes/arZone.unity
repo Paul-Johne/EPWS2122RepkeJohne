@@ -574,7 +574,7 @@ MonoBehaviour:
   buttonIgniteFirework: {fileID: 1914919679}
   sessionOrigin: {fileID: 1553697068}
   xrRefImgLib: {fileID: 11400000, guid: c234620949564fb49bdca50acfa2d47f, type: 2}
-  trackedImagePrefab: {fileID: 6924885091725051120, guid: 3fbce0e08c2745d41b13def9b2dbe0f8, type: 3}
+  trackedImagePrefab: {fileID: 0}
 --- !u!4 &804769159
 Transform:
   m_ObjectHideFlags: 0

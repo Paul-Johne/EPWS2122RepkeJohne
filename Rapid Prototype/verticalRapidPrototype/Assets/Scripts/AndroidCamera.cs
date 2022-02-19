@@ -7,7 +7,11 @@ using UnityEngine.UI;
 
 using UnityEngine.Android;
 
-/* Usable for Android API Level 21+ */
+/// <summary> 
+/// Usable for Android API Level 21+
+/// <c> This Code isn't working while Unity uses Camera Features </c>
+/// <example> [e.g. AR Scene or WebCamTexture] </example>
+/// </summary>
 public class AndroidCameraLIB {
 
     AndroidJavaClass unityActivity = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
